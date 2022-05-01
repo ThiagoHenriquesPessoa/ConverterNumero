@@ -10,14 +10,16 @@
             {
                 return UnidadePorExtenso.Conversor(unid);
             }
-            else if(deze == "1")
+            else if (num == "10")
             {
-                PrimeiraDezenasPorExtenso.Conversor(unid);
+                return "DEZ";
             }
             else
             {
                 switch (deze)
                 {
+                    case "1": return PrimeiraDezenasPorExtenso.Conversor(unid);
+
                     case "2": return "VINTE " + UnidadePorExtenso.Conversor(unid);
 
                     case "3": return "TRINTA " + UnidadePorExtenso.Conversor(unid);

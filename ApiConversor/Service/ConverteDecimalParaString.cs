@@ -2,40 +2,36 @@
 {
     public class ConverteDecimalParaString
     {
-        public string NumeroDecimal(string num)
+        public string NumeroDecimal(decimal num)
         {
-            if (num == "0.00") return "ZERO REAIS";
+            if (num == 0) return "ZERO REAIS";
+            string numero = num.ToString("000000000000000.00");
+            string centena = "";
+            string milhar = "";
+            string milhao = "";
+            string bilhao = "";
+            string trilhao = "";
 
-            string extenso = "";
-
-            string[] Arraynum = num.Split('.');
+            string[] Arraynum = numero.Split(',');
             string centavos = Arraynum[1];
             string real = Arraynum[0];
-            
-            if (real != "0")
+            if (real.Length > 0)
             {
-                real = MilharPorExtenso.Conversor(real);
-                var numeroR = real.Split(' ');
-                for (int i = 0; i < numeroR.Length; i++)
-                {
-                    if (numeroR[i].Length > 0)
-                    {
-                        if (i == 0)
-                        {
-                            real = numeroR[i];
-                        }
-                        else
-                        {
-                            real = real + " E " + numeroR[i];
-                        }
-                    }
-                }
+                centena = real.Substring(12, 3);
+                milhar = real.Substring(9, 3);
+                milhao = real.Substring(6, 3);
+                bilhao = real.Substring(3, 3);
+                trilhao = real.Substring(0, 3);
+                if (centena != "000") centena = CalculoDeCentena.Conversor(centena) + " REAIS E ";
+                if (milhar != "000") milhar = CalculoDeCentena.Conversor(milhar) + " MIL E ";
+                if (milhao != "000") milhao = CalculoDeCentena.Conversor(milhao) + " MILHÔES E ";
+                if (bilhao != "000") bilhao = CalculoDeCentena.Conversor(bilhao) + " BILHÔES E ";
+                if (trilhao != "000") trilhao = CalculoDeCentena.Conversor(trilhao) + " TRILHÔES E ";
             }
-
 
             if (centavos != "00")
             {
-                centavos = DezenasPorExtenso.Conversor(centavos);            
+                centavos = DezenasPorExtenso.Conversor(centavos);
                 var numeroC = centavos.Split(' ');
                 for (int i = 0; i < numeroC.Length; i++)
                 {
@@ -55,9 +51,20 @@
 
             if (centavos == "00")
             {
-                return real = real + " REAIS";
+                if (num > 999999999999) return trilhao + bilhao + milhao + milhar + centena;
+                if (num > 999999999) return bilhao + milhao + milhar + centena;
+                if (num > 999999) return milhao + milhar + centena;
+                if (num > 999) return milhar + centena;
+                return centena;
             }
-            return extenso = real + " REAIS" + " E " + centavos + " CENTAVOS";
+            else
+            {
+                if (num > 999999999999) return trilhao + bilhao + milhao + milhar + centena + centavos;
+                if (num > 999999999) return bilhao + milhao + milhar + centena + centavos;
+                if (num > 999999) return milhao + milhar + centena + centavos;
+                if (num > 999) return milhar + centena + centavos;
+                return centena + centavos;
+            }
         }
     }
 }

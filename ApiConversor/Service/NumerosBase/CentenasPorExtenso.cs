@@ -19,6 +19,10 @@ namespace ApiConversor.Service
                 dezena = dezena + unidade;
                 return DezenasPorExtenso.Conversor(dezena);
             }
+            else if (num == "100")
+            {
+                return "CEM";
+            }
             else
             {
                 switch (centena)

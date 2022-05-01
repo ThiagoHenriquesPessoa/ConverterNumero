@@ -21,7 +21,7 @@ namespace ApiConversor.Service
             }
             else
             {
-                return UnidadePorExtenso.Conversor(milhar) + " " + CentenasPorExtenso.Conversor(centena);
+                return UnidadePorExtenso.Conversor(milhar) + " Mil " + CentenasPorExtenso.Conversor(centena);
             }
         }
     }

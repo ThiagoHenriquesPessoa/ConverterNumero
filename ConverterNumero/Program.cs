@@ -9,7 +9,8 @@ namespace ConverterNumero
         {
             ConverteDecimalParaString converteDecimal = new ConverteDecimalParaString();
             string num = Console.ReadLine();
-            Console.WriteLine(converteDecimal.NumeroDecimal(num));
+            Decimal numero = Convert.ToDecimal(num);
+            Console.WriteLine(converteDecimal.NumeroDecimal(numero));
         }
     }
 }
