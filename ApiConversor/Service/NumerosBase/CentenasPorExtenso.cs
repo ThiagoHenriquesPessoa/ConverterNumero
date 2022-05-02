@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ApiConversor.Service
+﻿namespace ApiConversor.Service
 {
     public class CentenasPorExtenso
     {
@@ -16,7 +10,6 @@ namespace ApiConversor.Service
             dezena = dezena + unidade;
             if (centena == "0")
             {
-                dezena = dezena + unidade;
                 return DezenasPorExtenso.Conversor(dezena);
             }
             else if (num == "100")
@@ -27,7 +20,7 @@ namespace ApiConversor.Service
             {
                 switch (centena)
                 {
-                    case "1": return "CENTO " + DezenasPorExtenso.Conversor(dezena); 
+                    case "1": return "CENTO " + DezenasPorExtenso.Conversor(dezena);
 
                     case "2": return "DUZENTOS " + DezenasPorExtenso.Conversor(dezena);
 
@@ -50,4 +43,3 @@ namespace ApiConversor.Service
         }
     }
 }
-

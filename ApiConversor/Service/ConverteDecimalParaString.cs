@@ -23,10 +23,15 @@
                 bilhao = real.Substring(3, 3);
                 trilhao = real.Substring(0, 3);
                 if (centena != "000") centena = CalculoDeCentena.Conversor(centena) + " REAIS E ";
+                else centena = "";
                 if (milhar != "000") milhar = CalculoDeCentena.Conversor(milhar) + " MIL E ";
+                else milhar = "";
                 if (milhao != "000") milhao = CalculoDeCentena.Conversor(milhao) + " MILHÔES E ";
+                else milhao = "";
                 if (bilhao != "000") bilhao = CalculoDeCentena.Conversor(bilhao) + " BILHÔES E ";
+                else bilhao = "";
                 if (trilhao != "000") trilhao = CalculoDeCentena.Conversor(trilhao) + " TRILHÔES E ";
+                else trilhao = "";
             }
 
             if (centavos != "00")
@@ -47,24 +52,28 @@
                         }
                     }
                 }
+                centavos = centavos + " CENTAVOS";
             }
-
+            string A = "";
+            switch (num)
+            {
+                case 999999999999: real = trilhao + bilhao + milhao + milhar + centena;
+                    break;
+                case 999999999: real = trilhao + bilhao + milhao + milhar + centena;
+                    break;
+                case 999999: real = milhao + milhar + centena;
+                    break;
+                case 999: real = milhar + centena;
+                    break;
+                case 100 > num > 0: real = centena;
+                    break;
+            }              
+            
             if (centavos == "00")
             {
-                if (num > 999999999999) return trilhao + bilhao + milhao + milhar + centena;
-                if (num > 999999999) return bilhao + milhao + milhar + centena;
-                if (num > 999999) return milhao + milhar + centena;
-                if (num > 999) return milhar + centena;
-                return centena;
+                real = real + centavos;
             }
-            else
-            {
-                if (num > 999999999999) return trilhao + bilhao + milhao + milhar + centena + centavos;
-                if (num > 999999999) return bilhao + milhao + milhar + centena + centavos;
-                if (num > 999999) return milhao + milhar + centena + centavos;
-                if (num > 999) return milhar + centena + centavos;
-                return centena + centavos;
-            }
+            return real;
         }
     }
 }
