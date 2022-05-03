@@ -5,6 +5,7 @@
         public string NumeroDecimal(decimal num)
         {
             if (num == 0) return "ZERO REAIS";
+            if(num == 1) return "UM REAL";
             string numero = num.ToString("000000000000000.00");
             string centena = "";
             string milhar = "";
@@ -22,56 +23,54 @@
                 milhao = real.Substring(6, 3);
                 bilhao = real.Substring(3, 3);
                 trilhao = real.Substring(0, 3);
-                if (centena != "000") centena = CalculoDeCentena.Conversor(centena) + " REAIS E ";
+                if (centena != "000") centena = CalculoDeCentena.Conversor(centena);
                 else centena = "";
-                if (milhar != "000") milhar = CalculoDeCentena.Conversor(milhar) + " MIL E ";
+                if (milhar != "000") milhar = CalculoDeCentena.Conversor(milhar) + " MIL E";
                 else milhar = "";
-                if (milhao != "000") milhao = CalculoDeCentena.Conversor(milhao) + " MILHÔES E ";
+                if (milhao != "000") milhao = CalculoDeCentena.Conversor(milhao) + " MILHÔES E";
                 else milhao = "";
-                if (bilhao != "000") bilhao = CalculoDeCentena.Conversor(bilhao) + " BILHÔES E ";
+                if (bilhao != "000") bilhao = CalculoDeCentena.Conversor(bilhao) + " BILHÔES E";
                 else bilhao = "";
-                if (trilhao != "000") trilhao = CalculoDeCentena.Conversor(trilhao) + " TRILHÔES E ";
+                if (trilhao != "000") trilhao = CalculoDeCentena.Conversor(trilhao) + " TRILHÔES E";
                 else trilhao = "";
             }
 
             if (centavos != "00")
             {
-                centavos = DezenasPorExtenso.Conversor(centavos);
-                var numeroC = centavos.Split(' ');
-                for (int i = 0; i < numeroC.Length; i++)
+                if (centavos == "01") centavos = "UM CENTAVO";
+                else
                 {
-                    if (numeroC[i].Length > 0)
+                    centavos = DezenasPorExtenso.Conversor(centavos);
+                    var numeroC = centavos.Split(' ');
+                    for (int i = 0; i < numeroC.Length; i++)
                     {
-                        if (i == 0)
+                        if (numeroC[i].Length > 0)
                         {
-                            centavos = numeroC[i];
-                        }
-                        else
-                        {
-                            centavos = centavos + " E " + numeroC[i];
+                            if (i == 0)
+                            {
+                                centavos = numeroC[i];
+                            }
+                            else
+                            {
+                                centavos = centavos + " E " + numeroC[i];
+                            }
                         }
                     }
+                    centavos = centavos + " CENTAVOS";
                 }
-                centavos = centavos + " CENTAVOS";
             }
-            string A = "";
-            switch (num)
+            if(num > 999999999999) real = trilhao + bilhao + milhao + milhar + centena;
+            else if(num > 999999999) real = trilhao + bilhao + milhao + milhar + centena;
+            else if(num > 999999) real = milhao + milhar  + centena;
+            else if(num > 999) real = milhar + centena;
+            else if(num > 0) real = centena;
+
+            if (real == "UM") real = real + " REAL";
+            else real = real + " REAIS";
+
+            if (centavos != "00")
             {
-                case 999999999999: real = trilhao + bilhao + milhao + milhar + centena;
-                    break;
-                case 999999999: real = trilhao + bilhao + milhao + milhar + centena;
-                    break;
-                case 999999: real = milhao + milhar + centena;
-                    break;
-                case 999: real = milhar + centena;
-                    break;
-                case 100 > num > 0: real = centena;
-                    break;
-            }              
-            
-            if (centavos == "00")
-            {
-                real = real + centavos;
+                return real + " E " + centavos;
             }
             return real;
         }
